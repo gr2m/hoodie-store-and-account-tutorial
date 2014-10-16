@@ -1,7 +1,7 @@
 # Hoodie Store & Account Tutorial
 
 This is a simple app with instructions that you can follow
-to learn all the basis about `hoodie.store` and `hoodie.account.
+to learn all the basis about `hoodie.store` and `hoodie.account`.
 
 ## Installation & start
 
