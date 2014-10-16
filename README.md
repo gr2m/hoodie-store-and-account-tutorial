@@ -6,8 +6,8 @@ to learn all the basis about `hoodie.store` and `hoodie.account`.
 ## Installation & start
 
 ```
-hoodie new -t hoodie-store-and-account-tutorial
-cd hoodie-store-and-account-tutorial
+hoodie new hoodietutorial -t hoodie-store-and-account-tutorial
+cd hoodietutorial
 ```
 
 Once installation is done, you can start the app with
