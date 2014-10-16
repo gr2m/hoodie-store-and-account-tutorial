@@ -1,6 +1,6 @@
 {
   "name": "hoodie-store-and-account-tutorial",
-  "version": "3.0.0",
+  "version": "1.0.0",
   "type": "app",
   "dependencies": {
     "hoodie-server": "^2.0.0",
