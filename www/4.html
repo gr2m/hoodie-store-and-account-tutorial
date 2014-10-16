@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Hoodie Store &amp; Account Tutorial</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/prism/prism.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <script src="assets/vendor/jquery-2.1.0.min.js"></script>
+    <script src="assets/vendor/bootstrap/bootstrap.js"></script>
+    <script src="assets/vendor/prism/prism.js"></script>
+    <!-- Load the dynamic version of hoodie.js that includes all the plugin code-->
+    <script src="/_api/_files/hoodie.js"></script>
+    <script>
+      // initialize Hoodie
+      var hoodie  = new Hoodie();
+    </script>
+
+    <script src="assets/vendor/bootstrap.modalform.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Hoodie Store &amp; Account</h1>
+        <p>
+          Learn how to work with data and user accounts.
+        </p>
+      </div>
+
+      <div class="content">
+        <h2>Dynamic adding / changing / removing</h2>
+
+        <p>Below is the same list as you have seen it in <a href="/3.html">part 3</a></p>
+
+        <ul class="colorList"></ul>
+
+        This time, make it more dynamic, by listening to events,
+        so we can re-use some code. At the same time, this will
+        work out of the box once changes come from the server.
+
+<script>
+var lastColorId;
+function addNewColorToList(color) {
+  $('.colorList').prepend('<li data-id="'+color.id+'">'+color.name+' (id: '+color.id+')</li>')
+  $(document.body).css('background', color.name)
+  lastColorId = color.id;
+}
+function removeColorFromList(color) {
+  $('.colorList').find('[data-id="'+color.id+'"]').remove();
+}
+function updateColorOnList(color) {
+  $('.colorList').find('[data-id="'+color.id+'"]').text(color.name+' (id: '+color.id+')');
+  if (color.id === lastColorId) {
+    $(document.body).css('background', color.name)
+  }
+}
+
+// subscribe to changes
+hoodie.store.on('color:add', addNewColorToList);
+hoodie.store.on('color:remove', removeColorFromList);
+hoodie.store.on('color:update', updateColorOnList);
+
+// load all colors on page load, and apply last one
+$(function() {
+  hoodie.store.findAll('color').done(function(colors) {
+    colors.forEach(addNewColorToList);
+  })
+})
+</script>
+
+        <p>
+          This time we left out the remove button, because
+          we will do it by hand.
+        </p>
+
+        <h3>Add new color</h3>
+
+        <ul class="colorList"></ul>
+
+<pre><code class="language-javascript">hoodie.store.add('color', {name: prompt('Enter color')})</code></pre>
+
+        <p>
+          Open your browser console (If you don't know what that is, please ask :).
+          If you're to lazy, you can run the code above by hitting this button:
+        </p>
+
+        <p>
+          <button class="btn btn-primary" onclick="hoodie.store.add('color', {name: prompt('Enter color')})">add color</button>
+        </p>
+
+        <h3>Remove all colors</h3>
+
+        <ul class="colorList"></ul>
+
+<pre><code class="language-javascript">hoodie.store.removeAll('color');</code></pre>
+
+        <p>
+          <button class="btn btn-primary" onclick="hoodie.store.removeAll('color');">remove all colors</button>
+        </p>
+
+        <ul class="colorList"></ul>
+
+        <h3>Update a color</h3>
+
+        <p>
+          To update an existing color, copy one of the IDs above
+          then run the code
+        </p>
+
+<pre><code class="language-javascript">hoodie.store.update('color', prompt('id'), {color: prompt('color')} )</code></pre>
+
+        <p>
+          <button class="btn btn-primary" onclick="hoodie.store.update('color', prompt('id'), {name: prompt('color')} );">update color</button>
+        </p>
+
+        <h3>Do it yourself!</h3>
+
+        <p>
+          Open the browser console and experiment. Add new colors,
+          update them all at once using <code>hoodie.store.updateAll('color', {name: 'green'})</code>,
+          or remove only a single color using <code>hoodie.store.remove('color', prompt('id'))</code>.
+        </p>
+
+        <p>
+          Try to add other objects than colors, and find them again after page reload.
+          For example, add 3 new notes, reload the page, then find them again.
+        </p>
+        <p>
+          That's all you need to know about <code>hoodie.store</code>. The nice thing
+          is, if you use accounts, all your objects and changes get automatically synchronized,
+          as long as you listen to the events, you are all set for sync!
+        </p>
+        <p>
+          And that is exactly what we are going to learn in the <a href="5.html">next part</a>.
+        </p>
+      </div>
+
+      <footer class="copy">
+        <p>&hearts; hood.ie 2014</p>
+      </footer>
+    </div> <!-- /.container -->
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

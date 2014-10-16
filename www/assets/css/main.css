@@ -1,0 +1,59 @@
+/* ==========================================================================
+   Hoodie Sign In / Sign Up / Sign out stylings
+   ========================================================================== */
+
+body {
+  background: url('../img/pattern_130.gif');
+}
+
+.container {
+  position: relative;
+  background: #fff;
+  margin-top: -10px;
+  padding: 0;
+  box-shadow: 0 0 10px rgba(0,0,0,.5);
+}
+
+
+.content {
+  padding: 20px;
+}
+
+
+.copy {
+  padding: 20px;
+  margin: 30px 0 0;
+  border-radius: 5px;
+}
+.jumbotron,
+.copy {
+  background: #EBE7DA;
+  margin: 0;
+  border-radius: 0;
+}
+.copy p {
+  margin: 0;
+}
+
+.colorList {
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-bottom: 0;
+  padding: 0;
+}
+.colorList li {
+  list-style: none;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+.colorList li:hover {
+  background: #eee;
+}
+
+.colorList li:first-child:after {
+  content: ' current color';
+  color: #ccc;
+  margin-left: 20px;
+  font-style: italic;
+  font-size: 0.8;
+};
