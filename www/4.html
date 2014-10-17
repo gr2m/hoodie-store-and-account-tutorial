@@ -68,6 +68,9 @@ hoodie.store.on('color:update', updateColorOnList);
 // load all colors on page load, and apply last one
 $(function() {
   hoodie.store.findAll('color').done(function(colors) {
+    if (colors.length === 0) {
+      $('.colorList').replaceWith('<hr><p>Looks like you did not add colors yet, go back to <a href="/2.html">step two</a>.</p><hr>')
+    }
     colors.forEach(addNewColorToList);
   })
 })
