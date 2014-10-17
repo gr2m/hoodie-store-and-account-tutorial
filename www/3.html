@@ -49,7 +49,7 @@ hoodie.store.findAll('color').done(function(colors) {
 
   // make sure that colors exist already
   if (colors.length === 0) {
-    $list.replace('<p>Looks like you did not add colors yet, go back to <a href="/2.html">step two</a></p>')
+    $list.replaceWith('<p>Looks like you did not add colors yet, go back to <a href="/2.html">step two</a></p>')
     return
   }
 
