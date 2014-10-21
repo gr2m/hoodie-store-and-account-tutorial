@@ -3,6 +3,7 @@
 // show inline code
 $('.content script').each(function() {
   var code = $.trim( $(this).text() );
+  code = $('<div/>').text(code).html();
   $(this).after('<pre><code class="language-javascript">'+code+'</code></pre>')
 })
 

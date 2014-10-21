@@ -35,7 +35,7 @@
       <div class="content">
         <h2>Finding and removing colors</h2>
 
-        <p>The list below shows all color that you added in <a href="/2.html">step two</a></p>
+        <p>The list below shows all colors that you added in <a href="/2.html">step two</a>.</p>
 
         <ul class="colorList"></ul>
 
@@ -49,7 +49,7 @@ hoodie.store.findAll('color').done(function(colors) {
 
   // make sure that colors exist already
   if (colors.length === 0) {
-    $list.replace('<p>Looks like you did not add colors yet, go back to <a href="/2.html">step two</a></p>')
+    $list.replaceWith('<hr><p>Looks like you did not add colors yet, go back to <a href="/2.html">step two</a>.</p><hr>')
     return
   }
 
@@ -75,7 +75,7 @@ $('.colorList a').on('click', function(event) {
           objects of one type, in this case "color". You also
           learned how to remove a single object. In the next
           part of the tutorial, we will make it more dynamic,
-          and also write own code: <a href="/4.html">part 4</a>
+          and also write own code: <a href="/4.html">Part 4</a>.
         </p>
       </div>
 
