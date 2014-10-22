@@ -60,12 +60,14 @@ function updateColorOnList(color) {
   }
 }
 
-// subscribe to changes
+// Bei änderungen im Store (hinzufügen, entfernen, ändern)
+// die entsprechenden Funktionen ausfürhen
 hoodie.store.on('color:add', addNewColorToList);
 hoodie.store.on('color:remove', removeColorFromList);
 hoodie.store.on('color:update', updateColorOnList);
 
-// load all colors on page load, and apply last one
+// Beim Laden der Seite alle gespeicherten Farben laden
+// und die letzte als Hintergrund setzen
 $(function() {
   hoodie.store.findAll('color').done(function(colors) {
     if (colors.length === 0) {

@@ -53,14 +53,15 @@ $('#formColor').submit(function(event) {
   var color = $('#formColor input').val();
   $(document.body).css('background', color);
 
-  // store new color with Hoodie
+  // neue Farbe mit Hoodie speichern
   hoodie.store.add('color', {name: color});
 
-  // prevent page reload
+  // Neuladen der Seite verhindern
   event.preventDefault();
 })
 
-// load all colors on page load, and apply last one
+// Beim laden der Seite alle gespeicherten Farben laden
+// und die letzte als Hintergrund setzen
 hoodie.store.findAll('color').done(function(colors) {
   var lastColor = colors.shift();
   if (! lastColor) return;
