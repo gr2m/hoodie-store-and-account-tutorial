@@ -8,7 +8,7 @@ $('.content script').each(function() {
 })
 
 // add pagination
-var numPages = 5;
+var numPages = 7;
 var currentPage = parseInt(location.pathname.substr(1)) || 1;
 var pagination = '<ul class="pagination">\n';
 pagination += '  <li><a href="/">1</a></li>\n';

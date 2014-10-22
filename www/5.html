@@ -35,7 +35,50 @@
       <div class="content">
         <h2>Creating a user account</h2>
 
-        <p>wip</p>
+        <p>
+          You are currently <var class="status"></var>.
+          The code below shows how to find out.
+        </p>
+
+        <p class="signed-in-note" style="display:none">
+          Please sign out before you proceed:
+          <code>hoodie.account.signOut()</code>.
+          Then reload the page.
+        </p>
+
+<script>
+if (hoodie.account.username) {
+  $('.status').text('signed in as ' + hoodie.account.username)
+  $('.signed-in-note').show()
+} else {
+  $('.status').text('signed out')
+}
+</script>
+
+        <p>
+          Let's create a new account. Guess what, it's just one
+          line of code :)
+        </p>
+
+<script>
+function signUp() {
+  hoodie.account.signUp(prompt('username'), prompt('password'))
+    .done(function() {
+      alert("Good Job! On to the next side!")
+    })
+    .fail(function(errror) {
+      alert('Ooops, something went wrong: ' + error.message)
+    })
+}
+</script>
+        <p>
+          <button class="btn btn-primary" onclick="signUp()">run <code>signUp()</code></button>
+        </p>
+
+        <p>
+          In <a href="/6.html">the next step</a>, we build a sign in form and a sign out button.
+          So make sure you remember your username and password :)
+        </p>
       </div>
 
       <footer class="copy">

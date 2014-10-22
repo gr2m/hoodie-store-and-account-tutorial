@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Hoodie Store &amp; Account Tutorial</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/prism/prism.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <script src="assets/vendor/jquery-2.1.0.min.js"></script>
+    <script src="assets/vendor/bootstrap/bootstrap.js"></script>
+    <script src="assets/vendor/prism/prism.js"></script>
+    <!-- Load the dynamic version of hoodie.js that includes all the plugin code-->
+    <script src="/_api/_files/hoodie.js"></script>
+    <script>
+      // initialize Hoodie
+      var hoodie  = new Hoodie();
+    </script>
+
+    <script src="assets/vendor/bootstrap.modalform.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Hoodie Store &amp; Account</h1>
+        <p>
+          Learn how to work with data and user accounts.
+        </p>
+      </div>
+
+      <div class="content">
+        <h2>Store &lt;3 Account </h2>
+
+        <p>Now, let's combine it all together.</p>
+
+        <div class="well">
+          <div class="show-when-signed-in" style="display:none;">
+            <form id="formSignIn" action="">
+              <p>
+                <input id="inputUsername" class="form-control" placeholder="username">
+              </p>
+              <p>
+                <input id="inputPassword"  type="password" class="form-control" placeholder="password">
+              </p>
+              <p>
+                <button type="submit" class="btn btn-primary">sign in</button>
+              </p>
+            </form>
+          </div>
+
+          <div class="show-when-signed-out" style="display:none;">
+            <p>
+              <button onclick="hoodie.account.signOut()" class="btn btn-primary">run <code>hoodie.account.signOut()</code></button>
+            </p>
+          </div>
+
+          <hr>
+
+          <ul class="colorList"></ul>
+
+          <form id="formColor">
+            <p>
+              <input class="form-control" placeholder="e.g. green">
+            </p>
+            <p>
+              <button type="submit" class="btn btn-primary form-control">add color</button>
+            </p>
+          </form>
+        </div>
+
+        <p>
+          The code below shows and hides the the sign in form
+          and the sign out button respectively, by checking
+          if you are signend in on page load, and listening
+          to user events
+        </p>
+
+<script>
+if (hoodie.account.username) {
+  showSignOutButton()
+} else {
+  showSignInForm()
+}
+
+hoodie.account.on('signin', showSignOutButton)
+hoodie.account.on('signout', showSignInForm)
+
+// handle form submit
+$('#formSignIn').submit(function(event) {
+  var username = $('#inputUsername').val();
+  var password = $('#inputPassword').val();
+
+  hoodie.account.signIn(username, password)
+    .done(function () {
+      // Felder leeren
+      $('#inputUsername, #inputPassword').val('');
+    })
+    .fail(function(error) {
+      alert('ooops: ' + error.message);
+    })
+  // Neuladen der Seite verhindern
+  event.preventDefault();
+})
+
+$('#formColor').submit(function(event) {
+  var color = $('#formColor input').val();
+  $(document.body).css('background', color);
+
+  // neue Farbe mit Hoodie speichern
+  hoodie.store.add('color', {name: color});
+
+  // Neuladen der Seite verhindern
+  event.preventDefault();
+})
+$('.colorList').on('click', 'a', function(event) {
+  var id = $(event.target).closest('li').data('id');
+  $(event.target).closest('li').remove();
+  hoodie.store.remove('color', id);
+
+  // Neuladen der Seite verhindern
+  event.preventDefault();
+})
+
+
+
+// Bei änderungen im Store (hinzufügen, entfernen, ändern)
+// die entsprechenden Funktionen ausfürhen
+hoodie.store.on('color:add', addNewColorToList);
+hoodie.store.on('color:remove', removeColorFromList);
+hoodie.store.on('color:update', updateColorOnList);
+hoodie.store.on('clear', clearColorList);
+
+// Beim Laden der Seite alle gespeicherten Farben laden
+// und die letzte als Hintergrund setzen
+$(function() {
+  hoodie.store.findAll('color').done(function(colors) {
+    colors.forEach(addNewColorToList);
+  })
+})
+
+
+function showSignInForm() {
+  $('.show-when-signed-in').show()
+  $('.show-when-signed-out').hide()
+}
+function showSignOutButton() {
+  $('.show-when-signed-out').show()
+  $('.show-when-signed-in').hide()
+}
+
+var lastColorId;
+function addNewColorToList(color) {
+  $('.colorList').prepend('<li data-id="'+color.id+'">'+color.name+' (id: '+color.id+') <a style="color: #c00; font-weight: bold;" href="#" data-id="'+color.id+'">×</a></li>')
+  $(document.body).css('background', color.name)
+  lastColorId = color.id;
+}
+function removeColorFromList(color) {
+  $('.colorList').find('[data-id="'+color.id+'"]').remove();
+}
+function updateColorOnList(color) {
+  $('.colorList').find('[data-id="'+color.id+'"]').text(color.name+' (id: '+color.id+')');
+  if (color.id === lastColorId) {
+    $(document.body).css('background', color.name)
+  }
+}
+function clearColorList() {
+  $('.colorList').empty();
+}
+</script>
+
+        <p>
+          Liking it so far? We are just getting started.
+        </p>
+
+        <p>
+          Want to see something fun? Open this page in another
+          browser, sign in with the same account, then add colors.
+          See the magic happening.
+        </p>
+
+        <p>
+          That was it, hope you like it &lt;3<br>
+          – Ola &amp; Jan-Erik
+        </p>
+
+      </div>
+
+      <footer class="copy">
+        <p>&hearts; hood.ie 2014</p>
+      </footer>
+    </div> <!-- /.container -->
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

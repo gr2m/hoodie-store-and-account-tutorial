@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Hoodie Store &amp; Account Tutorial</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="assets/vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/prism/prism.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <script src="assets/vendor/jquery-2.1.0.min.js"></script>
+    <script src="assets/vendor/bootstrap/bootstrap.js"></script>
+    <script src="assets/vendor/prism/prism.js"></script>
+    <!-- Load the dynamic version of hoodie.js that includes all the plugin code-->
+    <script src="/_api/_files/hoodie.js"></script>
+    <script>
+      // initialize Hoodie
+      var hoodie  = new Hoodie();
+    </script>
+
+    <script src="assets/vendor/bootstrap.modalform.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Hoodie Store &amp; Account</h1>
+        <p>
+          Learn how to work with data and user accounts.
+        </p>
+      </div>
+
+      <div class="content">
+        <h2>Sign in, sign out, and account events</h2>
+
+        <div class="show-when-signed-in well" style="display:none;">
+          <form id="formSignIn" action="">
+            <p>
+              <input id="inputUsername" class="form-control" placeholder="username">
+            </p>
+            <p>
+              <input id="inputPassword"  type="password" class="form-control" placeholder="password">
+            </p>
+            <p>
+              <button type="submit" class="btn btn-primary">sign in</button>
+            </p>
+          </form>
+        </div>
+
+        <div class="show-when-signed-out well" style="display:none;">
+          <p>
+            <button onclick="hoodie.account.signOut()" class="btn btn-primary">run <code>hoodie.account.signOut()</code></button>
+          </p>
+        </div>
+
+        <p>
+          The code below shows and hides the the sign in form
+          and the sign out button respectively, by checking
+          if you are signend in on page load, and listening
+          to user events
+        </p>
+
+<script>
+if (hoodie.account.username) {
+  showSignOutButton()
+} else {
+  showSignInForm()
+}
+
+hoodie.account.on('signin', showSignOutButton)
+hoodie.account.on('signout', showSignInForm)
+
+// handle form submit
+$('#formSignIn').submit(function(event) {
+  var username = $('#inputUsername').val();
+  var password = $('#inputPassword').val();
+
+  hoodie.account.signIn(username, password)
+    .done(function () {
+      // Felder leeren
+      $('#inputUsername, #inputPassword').val('');
+    })
+    .fail(function(error) {
+      alert('ooops: ' + error.message);
+    })
+  // Neuladen der Seite verhindern
+  event.preventDefault();
+})
+
+
+function showSignInForm() {
+  $('.show-when-signed-in').show()
+  $('.show-when-signed-out').hide()
+}
+function showSignOutButton() {
+  $('.show-when-signed-out').show()
+  $('.show-when-signed-in').hide()
+}
+</script>
+
+        <p>Outro ...</p>
+      </div>
+
+      <footer class="copy">
+        <p>&hearts; hood.ie 2014</p>
+      </footer>
+    </div> <!-- /.container -->
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
