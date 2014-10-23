@@ -73,19 +73,19 @@
         </div>
 
         <p>
-          The code below shows and hides the the sign in form
-          and the sign out button respectively, by checking
-          if you are signend in on page load, and listening
-          to user events
+          The code below handles the account management
+          and loads your saved colors.
         </p>
 
 <script>
+// Check if we're signed in already
 if (hoodie.account.username) {
   showSignOutButton()
 } else {
   showSignInForm()
 }
 
+// Handle the signin and signout events from the server
 hoodie.account.on('signin', showSignOutButton)
 hoodie.account.on('signout', showSignInForm)
 
@@ -96,13 +96,13 @@ $('#formSignIn').submit(function(event) {
 
   hoodie.account.signIn(username, password)
     .done(function () {
-      // Felder leeren
+      // clear fields
       $('#inputUsername, #inputPassword').val('');
     })
     .fail(function(error) {
       alert('ooops: ' + error.message);
     })
-  // Neuladen der Seite verhindern
+  // prevent page reload
   event.preventDefault();
 })
 
@@ -110,10 +110,10 @@ $('#formColor').submit(function(event) {
   var color = $('#formColor input').val();
   $(document.body).css('background', color);
 
-  // neue Farbe mit Hoodie speichern
+  // store new color with Hoodie
   hoodie.store.add('color', {name: color});
 
-  // Neuladen der Seite verhindern
+  // prevent page reload
   event.preventDefault();
 })
 $('.colorList').on('click', 'a', function(event) {
@@ -121,21 +121,19 @@ $('.colorList').on('click', 'a', function(event) {
   $(event.target).closest('li').remove();
   hoodie.store.remove('color', id);
 
-  // Neuladen der Seite verhindern
+  // prevent page reload
   event.preventDefault();
 })
 
 
-
-// Bei änderungen im Store (hinzufügen, entfernen, ändern)
-// die entsprechenden Funktionen ausfürhen
+// On changes in the store (add, remove, update)
+// execute the corresponding function
 hoodie.store.on('color:add', addNewColorToList);
 hoodie.store.on('color:remove', removeColorFromList);
 hoodie.store.on('color:update', updateColorOnList);
 hoodie.store.on('clear', clearColorList);
 
-// Beim Laden der Seite alle gespeicherten Farben laden
-// und die letzte als Hintergrund setzen
+// Load all colors on page load, and apply last one
 $(function() {
   hoodie.store.findAll('color').done(function(colors) {
     colors.forEach(addNewColorToList);

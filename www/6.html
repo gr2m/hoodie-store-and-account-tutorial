@@ -58,7 +58,7 @@
         <p>
           The code below shows and hides the the sign in form
           and the sign out button respectively, by checking
-          if you are signend in on page load, and listening
+          if you are signed in on page load, and listening
           to user events
         </p>
 
@@ -79,13 +79,13 @@ $('#formSignIn').submit(function(event) {
 
   hoodie.account.signIn(username, password)
     .done(function () {
-      // Felder leeren
+      // clear fields
       $('#inputUsername, #inputPassword').val('');
     })
     .fail(function(error) {
       alert('ooops: ' + error.message);
     })
-  // Neuladen der Seite verhindern
+  // prevent page reload
   event.preventDefault();
 })
 

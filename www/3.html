@@ -49,8 +49,8 @@ hoodie.store.findAll('color').done(function(colors) {
 
   // make sure that colors exist already
   if (colors.length === 0) {
-    $list.replaceWith('<hr><p>Looks like you did not add colors yet, go back to <a href="/2.html">step two</a>.</p><hr>')
-    return
+    $list.replaceWith('<hr><p>Looks like you did not add colors yet, go back to <a href="/2.html">step two</a>.</p><hr>');
+    return;
   }
 
   // add all colors to the list above
