@@ -43,30 +43,31 @@
 
 <script>
 
-// Beim laden der Seite alle gespeicherten Farben laden
-// und die letzte als Hintergrund setzen
+// when the site loads in the browser, 
+// load all previously saved colors from hoodie
+// and set the last one as the background color
 hoodie.store.findAll('color').done(function(colors) {
   var $list = $('.colorList');
 
-  // Sicherstellen, das bereits Farben gespeichert wurden
+  // check if color entries exist
   if (colors.length === 0) {
     $list.replaceWith('<hr><p>Looks like you did not add colors yet, go back to <a href="/2.html">step two</a>.</p><hr>')
     return
   }
 
-  // Alle gespeicherten Farben der Liste hinzufügen
+  // add all saved colors to the list
   colors.forEach(function(color) {
     $list.append('<li>'+color.name+' <a style="color: #c00; font-weight: bold;" href="#" data-id="'+color.id+'">×</a></li>');
   });
 })
 
-// Bei klick auf den "×" Lösch-Button ausführen
+// delete a color when the "x"-Button is pressed
 $('.colorList a').on('click', function(event) {
   var id = $(event.target).data('id');
   $(event.target).closest('li').remove();
   hoodie.store.remove('color', id);
 
-  // Neuladen der Seite verhindern
+  // prevent the site to reload in the browser
   event.preventDefault();
 })
 </script>

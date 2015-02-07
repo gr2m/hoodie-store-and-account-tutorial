@@ -96,13 +96,13 @@ $('#formSignIn').submit(function(event) {
 
   hoodie.account.signIn(username, password)
     .done(function () {
-      // Felder leeren
+      // clear input fields
       $('#inputUsername, #inputPassword').val('');
     })
     .fail(function(error) {
       alert('ooops: ' + error.message);
     })
-  // Neuladen der Seite verhindern
+  // prevent the site to reload in the browser
   event.preventDefault();
 })
 
@@ -110,10 +110,10 @@ $('#formColor').submit(function(event) {
   var color = $('#formColor input').val();
   $(document.body).css('background', color);
 
-  // neue Farbe mit Hoodie speichern
+  // save a new color with Hoodie
   hoodie.store.add('color', {name: color});
 
-  // Neuladen der Seite verhindern
+  // prevent the site to reload in the browser
   event.preventDefault();
 })
 $('.colorList').on('click', 'a', function(event) {
@@ -121,21 +121,22 @@ $('.colorList').on('click', 'a', function(event) {
   $(event.target).closest('li').remove();
   hoodie.store.remove('color', id);
 
-  // Neuladen der Seite verhindern
+  // prevent the site to reload in the browser
   event.preventDefault();
 })
 
 
 
-// Bei änderungen im Store (hinzufügen, entfernen, ändern)
-// die entsprechenden Funktionen ausfürhen
+// when entries in the store change (add, delete, update)
+// execute the specific function
 hoodie.store.on('color:add', addNewColorToList);
 hoodie.store.on('color:remove', removeColorFromList);
 hoodie.store.on('color:update', updateColorOnList);
 hoodie.store.on('clear', clearColorList);
 
-// Beim Laden der Seite alle gespeicherten Farben laden
-// und die letzte als Hintergrund setzen
+// when the site loads in the browser, 
+// load all previously saved colors from hoodie
+// and set the last one as the background color
 $(function() {
   hoodie.store.findAll('color').done(function(colors) {
     colors.forEach(addNewColorToList);

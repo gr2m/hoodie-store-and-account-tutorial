@@ -79,13 +79,13 @@ $('#formSignIn').submit(function(event) {
 
   hoodie.account.signIn(username, password)
     .done(function () {
-      // Felder leeren
+      // clear input fields
       $('#inputUsername, #inputPassword').val('');
     })
     .fail(function(error) {
       alert('ooops: ' + error.message);
     })
-  // Neuladen der Seite verhindern
+  // prevent the site to reload in the browser
   event.preventDefault();
 })
 
